@@ -1,6 +1,0 @@
-[project]
-name = lektor_ghpages_sample
-
-[servers.ghpages]
-default = yes
-target = ghpages://QUT-Digital-Observatory/lektor_ghpages_sample
