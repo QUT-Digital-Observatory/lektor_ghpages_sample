@@ -31,9 +31,12 @@ jobs:
           pip install --upgrade pip
           pip install lektor
 
-      # Lektor build will store the build files in a temporary directory for later
+      # Lektor build will store the build files in a temporary directory for later.
+      # We want to keep the readme etc updated also!
       - name: Build with Lektor
-        run: lektor build --output-path $RUNNER_TEMP/build
+        run: |
+          lektor build --output-path $RUNNER_TEMP/build
+          cp .gitignore README.md .github/workflows/publish.yaml $RUNNER_TEMP/build
 
       - name: Setup git config
         run: |
@@ -45,12 +48,10 @@ jobs:
         with:
           ref: gh-pages
 
-      # Gets the built website files from the temporary directory, and the common files (like the readme) from the main
-      # branch, and commits them to the gh-pages branch
+      # Gets the built website files from the temporary directory and commits them to gh-pages branch
       - name: Commit build to gh-pages
         run: |
           cp -r $RUNNER_TEMP/build/* .
-          git checkout main .gitignore README.md .github/workflows/publish.yaml
           git add *
           git commit -m "Automated commit for deploy"
           git push origin gh-pages
