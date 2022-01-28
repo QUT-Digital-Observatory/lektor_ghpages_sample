@@ -36,7 +36,7 @@ jobs:
       - name: Build with Lektor
         run: |
           lektor build --output-path $RUNNER_TEMP/build
-          cp .gitignore README.md .github/workflows/publish.yaml $RUNNER_TEMP/build
+          cp .gitignore README.md $RUNNER_TEMP/build
 
       - name: Setup git config
         run: |
