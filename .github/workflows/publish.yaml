@@ -44,4 +44,5 @@ jobs:
         run: |
           git switch gh-pages
           cp -r "$(lektor project-info --output-path)"/* .
-          
+          git add *
+          git commit -m "Automated commit for deploy"
