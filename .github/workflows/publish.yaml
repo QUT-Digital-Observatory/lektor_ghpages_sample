@@ -31,8 +31,17 @@ jobs:
           pip install --upgrade pip
           pip install lektor
 
+      # Lektor build will store the build files elsewhere in the runner file system, we'll grab them later
       - name: Build with Lektor
         run: lektor build
 
+      - name: Setup git config
+        run: |
+          git config user.name "lektor deploy"
+          git config user.email "<>"
+
       - name: Commit to gh-pages
-        run: lektor deploy ghpages
+        run: |
+          git switch gh-pages
+          cp -r "$(lektor project-info --output-path)"/* .
+          
