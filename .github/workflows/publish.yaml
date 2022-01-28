@@ -31,9 +31,9 @@ jobs:
           pip install --upgrade pip
           pip install lektor
 
-      # Lektor build will store the build files elsewhere in the runner file system, we'll grab them later
+      # Lektor build will store the build files in a temporary directory for later
       - name: Build with Lektor
-        run: lektor build
+        run: lektor build --output-path $RUNNER_TEMP/build
 
       - name: Setup git config
         run: |
@@ -47,6 +47,6 @@ jobs:
 
       - name: Commit to gh-pages
         run: |
-          cp -r "$(lektor project-info --output-path)"/* .
+          cp -r $RUNNER_TEMP/build/* .
           git add *
           git commit -m "Automated commit for deploy"
