@@ -40,9 +40,13 @@ jobs:
           git config user.name "lektor deploy"
           git config user.email "<>"
 
+      - name: Switch to gh-pages
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+
       - name: Commit to gh-pages
         run: |
-          git switch gh-pages
           cp -r "$(lektor project-info --output-path)"/* .
           git add *
           git commit -m "Automated commit for deploy"
